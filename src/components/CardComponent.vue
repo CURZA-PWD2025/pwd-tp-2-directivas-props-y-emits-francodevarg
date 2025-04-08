@@ -8,8 +8,11 @@
     </p>
     <p><strong>Director:</strong> {{ movie.director }}</p>
     
-    <img :src="movie.portada" :alt="movie.titulo">
+    <img :src="movie.portada" :alt="movie.portada">
     
+    <button @click="sumarLikes">
+      {{ '❤️' }} {{ movie.likes }} 
+    </button>
   </div>
 </template>
 
@@ -17,5 +20,13 @@
 import type { Pelicula } from '../interfaces/Pelicula'
 
 const props = defineProps<{ movie: Pelicula }>()
+const emit = defineEmits<{
+  (e: 'update_likes', id: number, newLikes: number): void
+}>()
 
+
+function sumarLikes() {
+  const newLikes =  props.movie.likes + 1 ;
+  emit('update_likes', props.movie.id, newLikes)
+}
 </script>

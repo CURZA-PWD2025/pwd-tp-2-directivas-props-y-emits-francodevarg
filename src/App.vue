@@ -4,6 +4,7 @@
     v-for="movie in movies"
     :key="movie.id"
     :movie="movie"
+    @update_likes="updateLikes"
   />
 </template>
 
@@ -14,4 +15,9 @@ import type { Pelicula } from './interfaces/Pelicula'
 import CardComponent from './components/CardComponent.vue'
 
 const movies = ref<Pelicula[]>(peliculas)
+
+function updateLikes(id: number, newLikes: number) {
+  const movie = movies.value.find(m => m.id === id)
+  if (movie) movie.likes = newLikes
+}
 </script>
